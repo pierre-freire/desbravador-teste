@@ -7,6 +7,8 @@ import "./index.css";
 import Home from "./pages/home";
 import ShowPerson from "./pages/showPerson";
 import ShowRepo from "./pages/showRepository";
+import NotFound from "./pages/notFound";
+import Error from "./pages/error";
 
 // home, show person, show repositorie
 const router = createBrowserRouter([
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
 	{
 		path: "show_repo/:user/:repo",
 		element: <ShowRepo />,
+	},
+	{
+		path: "not_found",
+		element: <NotFound />,
+	},
+	{
+		path: "error",
+		element: <Error />,
 	},
 ]);
 

@@ -5,13 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { searchUser, getUserRepos } from "../../util/API";
-import NotFound from "../../components/notFound";
 
 export default function Home() {
   const [user, setUser] = useState({})
   const [repos, setRepos] = useState([])
   const [reversed, setReversed] = useState(false)
-  const [notFound, setNotFound] = useState(false)
   const navigate = useNavigate();
   const { name } = useParams()
 
@@ -24,10 +22,14 @@ export default function Home() {
     const resUser = await searchUser(name)
     setUser(resUser)
 
-    console.log('res: ',resUser)
-
+    console.log(resUser)
+    
     if(resUser.name === 'AxiosError') {
-      setNotFound(true)
+      if(resUser.response.status === 404) {
+        navigate('/not_found')
+      } else {
+        navigate('/error')
+      }
       return
     }
 
@@ -69,7 +71,6 @@ export default function Home() {
   return(
     <main>
       <Header />
-      {!notFound ?
       <div className="p-8 md:max-w-[1000px] mx-auto my-0">
         <section className="flex flex-col mb-7 gap-7">
           <div className="flex justify-between">
@@ -92,14 +93,13 @@ export default function Home() {
           </thead>
           <tbody>
             {repos.length > 0 && repos.map((elm, i) => { return(
-              <tr key={i} className="flex justify-between p-2 cursor-pointer odd:bg-teal-100" onClick={() => redirectToRepo(elm.name)}>
+              <tr key={i} className="flex justify-between p-2 cursor-pointer odd:bg-teal-200 hover:bg-teal-800 hover:text-white" onClick={() => redirectToRepo(elm.name)}>
                 <td className="text-lg">{elm.name}</td>
                 <td className="text-lg">{elm.stargazers_count}</td>
               </tr>
             )})}
           </tbody>
         </table>
-      </div>: <NotFound />}
-
+      </div>
     </main>)
 }

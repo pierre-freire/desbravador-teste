@@ -2,41 +2,31 @@ import { useParams } from 'react-router-dom';
 import { getRepoInfo } from '../../util/API'; 
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from "react-router-dom";
 import { faArrowUpRightFromSquare, faLaptopCode, faStar } from '@fortawesome/free-solid-svg-icons'
 import Header from "../../components/header"
-import Error from '../../components/error';
 
 
 export default function ShowRepo() {
   const [repository, setRepository] = useState({})
   const { user, repo } = useParams()
-  const [ error, setError ] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getRepo()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  /*
-  nome, descrição, ,número de estrelas, linguagem e um link externo para a página do repositório no GitHub
-  */
-
-  useEffect(() => {
-    console.log('rrrrrrrrrr',repository)
-  }, [repository])
-
   async function getRepo() {
     const res = await getRepoInfo(user, repo)
     if (res?.response?.status && res?.response?.status !== 200) {
-      setError(true)
+      navigate('/error')
     }
     setRepository(res)
   }
 
   return(
     <>
-      {error ? <Error />
-      :
       <main>
         <Header />
         {Object.keys(repository).length > 0 && 
@@ -64,7 +54,6 @@ export default function ShowRepo() {
             {repository.description && <p className="text-center">{repository.description}</p>}
           </section>}
         </main>
-      }
     </>
   )
 }

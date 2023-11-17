@@ -2,12 +2,10 @@ import Header from "../../components/header"
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { listUsers } from "../../util/API";
-import Error from "../../components/error";
 
 export default function Home() {
   const [search, setSearch] = useState('')
   const [homeUsers, setHomeUsers] = useState([])
-  const [error, setError] = useState(false)
   const navigate = useNavigate();
   
   function handleKeyDown(key) {
@@ -17,6 +15,7 @@ export default function Home() {
   }
   
   function searchApi() {
+    if(search.length === 0 ) return
     navigate(`/show_person/${search}`)
   }
 
@@ -27,20 +26,15 @@ export default function Home() {
 
   async function getUsers() {
     const resUser = await listUsers()
-    console.log('43657', resUser)
+    
     if (resUser?.response?.status && resUser?.response?.status !== 200) {
-      setError(true)
+      navigate('/error')
     } else {
       setHomeUsers(resUser)
-      setError(false)
     }
-    console.log('qw3123', homeUsers)
   }
   return (
     <>
-      {error ? 
-        <Error />
-        :
         <main>
           <Header />
           <div className="flex flex-col justify-center items-center gap-3 p-8">
@@ -57,7 +51,7 @@ export default function Home() {
               <a
                 href={`show_person/${item.login}`}
                 key={item.id}
-                className="flex items-center gap-3 min-w-[250px] rounded-full px-2 py-2 bg-teal-200"
+                className="flex items-center gap-3 min-w-[250px] rounded-full px-2 py-2 bg-teal-200 hover:bg-teal-800 hover:text-white"
               >
                 <img
                   src={item.avatar_url}
@@ -71,7 +65,6 @@ export default function Home() {
               )}
           </div>
         </main>
-      }
     </>
   )
 }

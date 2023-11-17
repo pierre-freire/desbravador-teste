@@ -1,9 +1,10 @@
 import axios from "axios";
-const gitToken =
-	"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";
-
 const baseURL = "https://api.github.com";
-axios.defaults.headers.common["Authorization"] = `Bearer ${gitToken}`;
+
+/*const gitToken =
+	"seu token aqui";
+axios.defaults.headers.common["Authorization"] = `Bearer ${gitToken}`;*/
+
 export async function listUsers() {
 	try {
 		const response = await axios.get(`${baseURL}/users`);
