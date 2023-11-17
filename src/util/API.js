@@ -1,21 +1,16 @@
 import axios from "axios";
+const gitToken =
+	"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";
 
 const baseURL = "https://api.github.com";
-
+axios.defaults.headers.common["Authorization"] = `Bearer ${gitToken}`;
 export async function listUsers() {
-	axios
-		.get(`${baseURL}/users`)
-		.then(function (response) {
-			// handle success
-			console.log(response);
-		})
-		.catch(function (error) {
-			// handle error
-			console.log(error);
-		})
-		.finally(function () {
-			// always executed
-		});
+	try {
+		const response = await axios.get(`${baseURL}/users`);
+		return response.data;
+	} catch (err) {
+		return err;
+	}
 }
 
 export async function searchUser(user) {

@@ -1,26 +1,18 @@
 import reportWebVitals from "./reportWebVitals";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
 import Home from "./pages/home";
 import ShowPerson from "./pages/showPerson";
-import ShowRepo from "./pages/showRepositorie";
+import ShowRepo from "./pages/showRepository";
 
 // home, show person, show repositorie
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Home />,
-	},
-	{
-		path: "about",
-		element: (
-			<div>
-				About<Link to="about">About Us</Link>
-			</div>
-		),
 	},
 	{
 		path: "show_person/:name",

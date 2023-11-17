@@ -11,7 +11,8 @@ export default function Header() {
   }
 
   return (
-    <header className="flex flex-col gap-2">
-      <FontAwesomeIcon className="text-slate-800 text-6xl" icon={faGithub} onClick={goHome} />
+    <header className="flex flex-col gap-2 bg-teal-800 ">
+      <FontAwesomeIcon className="text-white text-6xl py-4 cursor-pointer" icon={faGithub} onClick={goHome} />
+      <h1 className="sr-only">Teste desbravadores</h1>
     </header>)
 }

@@ -67,17 +67,17 @@ export default function Home() {
   }
 
   return(
-    <main className="p-2">
+    <main>
       <Header />
       {!notFound ?
-      <>
-        <section className="flex flex-col mt-2 mb-2">
+      <div className="p-8 md:max-w-[1000px] mx-auto my-0">
+        <section className="flex flex-col mb-7 gap-7">
           <div className="flex justify-between">
             <div className="flex flex-col justify-around">
-              <p className="text-lg">{user.name}</p>
-              <p className="text-lg">{user.email}</p>
-              <p className="text-lg">seguidores: {user.followers}</p>
-              <p className="text-lg">seguindo: {user.following}</p>
+              {user.name && <p className="text-lg text-teal-800 font-bold">{user.name}</p>}
+              {user.email && <p className="text-lg">{user.email}</p>}
+              {user.followers && <p className="text-lg">Seguidores: {user.followers}</p>}
+              {user.following && <p className="text-lg">Seguindo: {user.following}</p>}
             </div>
             <img alt="user avatar" className="rounded-full w-32" src={user.avatar_url} loading="lazy" />
           </div>
@@ -86,20 +86,20 @@ export default function Home() {
         <table className="w-full items-center">
           <thead>
             <tr className="flex justify-between items-center border-solid border-b-[1px]">
-              <th className="text-lg">Nome</th>
+              <th className="text-lg">Repositórios</th>
               <th className="flex items-center text-lg" onClick={changeDirection}>Estrelas <FontAwesomeIcon className="text-slate-800 text-lg pl-2" icon={reversed ? faArrowDown : faArrowUp} /></th>
             </tr>
           </thead>
           <tbody>
             {repos.length > 0 && repos.map((elm, i) => { return(
-              <tr key={i} className="flex justify-between p-2 odd:bg-slate-200" onClick={() => redirectToRepo(elm.name)}>
+              <tr key={i} className="flex justify-between p-2 cursor-pointer odd:bg-teal-100" onClick={() => redirectToRepo(elm.name)}>
                 <td className="text-lg">{elm.name}</td>
                 <td className="text-lg">{elm.stargazers_count}</td>
               </tr>
             )})}
           </tbody>
         </table>
-      </>: <NotFound />}
+      </div>: <NotFound />}
 
     </main>)
 }
