@@ -2,6 +2,8 @@
 
 Projeto a ser avaliado pela empresa Desbravador.
 
+O projeto pode ser visitado em https://desbravadorteste.netlify.app/
+
 Instalação das Dependências Certifique-se de ter o Yarn instalado. Em seguida,
 execute o seguinte comando para instalar as dependências:
 
